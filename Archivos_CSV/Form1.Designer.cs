@@ -35,6 +35,7 @@
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnEliminarArchivo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,11 +101,11 @@
             // 
             this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(130)))), ((int)(((byte)(153)))));
             this.btnGuardar.Font = new System.Drawing.Font("Lucida Bright", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuardar.Location = new System.Drawing.Point(779, 66);
+            this.btnGuardar.Location = new System.Drawing.Point(746, 12);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(138, 38);
+            this.btnGuardar.Size = new System.Drawing.Size(199, 38);
             this.btnGuardar.TabIndex = 5;
-            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.Text = "Guardar archivo";
             this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
@@ -118,12 +119,25 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Archivos CSV";
             // 
+            // btnEliminarArchivo
+            // 
+            this.btnEliminarArchivo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(130)))), ((int)(((byte)(153)))));
+            this.btnEliminarArchivo.Font = new System.Drawing.Font("Lucida Bright", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminarArchivo.Location = new System.Drawing.Point(746, 66);
+            this.btnEliminarArchivo.Name = "btnEliminarArchivo";
+            this.btnEliminarArchivo.Size = new System.Drawing.Size(199, 38);
+            this.btnEliminarArchivo.TabIndex = 7;
+            this.btnEliminarArchivo.Text = "Eliminar archivo";
+            this.btnEliminarArchivo.UseVisualStyleBackColor = false;
+            this.btnEliminarArchivo.Click += new System.EventHandler(this.btnEliminarArchivo_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(204)))), ((int)(((byte)(234)))));
             this.ClientSize = new System.Drawing.Size(957, 631);
+            this.Controls.Add(this.btnEliminarArchivo);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnEliminar);
@@ -148,6 +162,7 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnEliminarArchivo;
     }
 }
 

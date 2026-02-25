@@ -28,7 +28,7 @@ namespace Archivos_CSV
             openFileDialog.Filter = "Archivos CSV (*.csv)|*.csv|Todos los archivos (*.*)|*.*";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
-                rutaArchivoActual = openFileDialog.FileName; // <-- AGREGA ESTA LÍNEA
+                rutaArchivoActual = openFileDialog.FileName;
             {
                 tablaCSV.Clear();
                 tablaCSV.Columns.Clear();
@@ -47,7 +47,7 @@ namespace Archivos_CSV
                         tablaCSV.Rows.Add(datos);
                     }
                     dgvDatos.DataSource = tablaCSV;
-                    // --- NUEVO CÓDIGO: Bloquear todas las celdas cargadas ---
+                    // Después de cargar los datos, bloqueamos todas las celdas para que no se puedan editar directamente
                     foreach (DataGridViewRow fila in dgvDatos.Rows)
                     {
                         foreach (DataGridViewCell celda in fila.Cells)
@@ -128,11 +128,11 @@ namespace Archivos_CSV
         private void btnGuardar_Click(object sender, EventArgs e)
         {
 
-            // 1. Aseguramos que cualquier edición en la celda se confirme
+            //  Aseguramos que cualquier edición en la celda se confirme
             dgvDatos.EndEdit();
             tablaCSV.AcceptChanges();
 
-            // 2. Verificamos si realmente hay un archivo abierto
+            //  Verificamos si realmente hay un archivo abierto
             if (string.IsNullOrEmpty(rutaArchivoActual))
             {
                 MessageBox.Show("No hay ningún archivo abierto para guardar. Primero abre un archivo CSV.",
@@ -144,7 +144,7 @@ namespace Archivos_CSV
 
             try
             {
-                // 3. Sobrescribimos el archivo original directamente
+                // Sobrescribimos el archivo original directamente
                 using (StreamWriter sw = new StreamWriter(rutaArchivoActual))
                 {
                     // Escribir los encabezados
@@ -184,6 +184,54 @@ namespace Archivos_CSV
                                 "Error",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEliminarArchivo_Click(object sender, EventArgs e)
+        {
+            // 1. Verificamos si realmente hay un archivo abierto en este momento
+            if (string.IsNullOrEmpty(rutaArchivoActual))
+            {
+                MessageBox.Show("No hay ningún archivo abierto para eliminar.",
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return; // Salimos para evitar errores
+            }
+
+            // 2. Pedimos confirmación al usuario (¡Por seguridad!)
+            DialogResult confirmacion = MessageBox.Show($"¿Estás seguro de que deseas eliminar permanentemente el archivo:\n{rutaArchivoActual}?",
+                                                        "Confirmar Eliminación",
+                                                        MessageBoxButtons.YesNo,
+                                                        MessageBoxIcon.Warning);
+
+            // 3. Si el usuario hace clic en "Sí"
+            if (confirmacion == DialogResult.Yes)
+            {
+                try
+                {
+                    // 4. Eliminamos el archivo físico del disco duro
+                    File.Delete(rutaArchivoActual);
+
+                    // . Limpiamos la memoria y la pantalla para que quede en blanco
+                    rutaArchivoActual = "";       // Olvidamos la ruta
+                    tablaCSV.Clear();           // Borramos los datos de memoria
+                    tablaCSV.Columns.Clear();   // Borramos las columnas
+                    dgvDatos.DataSource = null;   // Desvinculamos la tabla para que se vea vacía
+
+                    MessageBox.Show("El archivo ha sido eliminado correctamente de tu computadora.",
+                                    "Archivo Eliminado",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    // Si el archivo está abierto en otro programa y Windows no deja borrarlo
+                    MessageBox.Show("Error al intentar eliminar el archivo:\n\n" + ex.Message,
+                                    "Error",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                }
             }
         }
     }
